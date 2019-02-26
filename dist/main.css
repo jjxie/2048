@@ -1,0 +1,55 @@
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  background-color: #faf8ef; }
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  height: 50px;
+  align-items: center; }
+  .header .bestScore {
+    font-size: 16px;
+    color: #edc22e;
+    padding: 5px; }
+  .header img {
+    height: 28px;
+    width: 28px;
+    padding: 5px;
+    margin-left: 22px; }
+
+.logo {
+  margin-top: -28px;
+  text-align: center;
+  color: #776e66; }
+  .logo .p {
+    font-size: 16px; }
+
+.score {
+  color: #edc22e;
+  font-size: 20px;
+  text-align: center; }
+
+.board {
+  background-color: #baada0;
+  text-align: center;
+  height: 464px;
+  width: 476px;
+  margin: auto;
+  border-radius: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: 20px; }
+  .board .gridRow {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 6px; }
+    .board .gridRow .gridCell {
+      display: flex;
+      background-color: #ccc1b4;
+      height: 80px;
+      width: 80px;
+      padding: 12px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      font-size: 30px; }

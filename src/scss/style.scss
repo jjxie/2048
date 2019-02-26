@@ -1,0 +1,81 @@
+$base-font-family: Verdana, Geneva, sans-serif;
+$base-font-size: 20px;
+$small-font-size: 16px;
+$base-theme-color: #edc22e;
+$background-color: #faf8ef;
+$board-color: #baada0;
+$cell-color: #ccc1b4;
+$text-color: #776e66;
+$border-radius: 10px;
+$board-font-size: 30px;
+
+body {
+  font-family: $base-font-family;
+  background-color: $background-color;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  height: 50px;
+  align-items: center;
+
+  .bestScore {
+    font-size: $small-font-size;
+    color: $base-theme-color;
+    padding: 5px;
+  }
+
+  img {
+    height: 28px;
+    width: 28px;
+    padding: 5px;
+    margin-left: 22px;
+  }
+}
+
+.logo {
+  margin-top: -28px;
+  text-align: center;
+  color: $text-color;
+
+  .p {
+    font-size: $small-font-size;
+  }
+}
+
+.score {
+  color: $base-theme-color;
+  font-size: $base-font-size;
+  text-align: center;
+}
+
+.board {
+  background-color: $board-color;
+  text-align: center;
+  height: 464px;
+  width: 476px;
+  margin: auto;
+  border-radius: $border-radius;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: 20px;
+
+  .gridRow {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 6px;
+
+    .gridCell {
+      display: flex;
+      background-color: $cell-color;
+      height: 80px;
+      width: 80px;
+      padding: 12px;
+      justify-content: center;
+      align-items: center;
+      border-radius: $border-radius;
+      font-size: $board-font-size;
+    }
+  }
+}
