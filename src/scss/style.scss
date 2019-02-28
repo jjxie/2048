@@ -1,17 +1,43 @@
+@import "helper.scss";
+
 $base-font-family: Verdana, Geneva, sans-serif;
 $base-font-size: 20px;
 $small-font-size: 16px;
 $base-theme-color: #edc22e;
 $background-color: #faf8ef;
 $board-color: #baada0;
-$cell-color: #ccc1b4;
 $text-color: #776e66;
-$border-radius: 10px;
-$board-font-size: 30px;
+$bright-text-color: #f9f6f2;
+$border-radius: 5px;
+$board-font-size: 55px;
+
+$cell-color: #eee4da;
+$cell-gold-color: #edc22e;
+$cell-gold-glow-color: lighten($cell-gold-color, 15%);
+$field-width: 500px;
+$mobile-threshold: $field-width + 20px;
+
+$transition-speed: 100ms;
+
+%grid-cell {
+  display: flex;
+  background-color: rgba($cell-color, 0.35);
+  height: 80px;
+  width: 80px;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius;
+  font-size: $board-font-size;
+}
 
 body {
   font-family: $base-font-family;
   background-color: $background-color;
+
+  div:focus {
+    outline: none;
+  }
 }
 
 .header {
@@ -67,15 +93,95 @@ body {
     padding: 6px;
 
     .gridCell {
-      display: flex;
-      background-color: $cell-color;
-      height: 80px;
-      width: 80px;
-      padding: 12px;
-      justify-content: center;
-      align-items: center;
-      border-radius: $border-radius;
-      font-size: $board-font-size;
+      @extend %grid-cell;
+    }
+
+    // This section is forked from https://github.com/claudiopro/2048-react
+    $base: 2;
+    $exponent: 1;
+    $limit: 11;
+
+    // Colors for all 11 states, false = no special color
+    // Colors for all 11 states, false = no special color
+    $special-colors: false false,
+      // 2
+        false false,
+      // 4
+        #f78e48 true,
+      // 8
+        #fc5e2e true,
+      // 16
+        #ff3333 true,
+      // 32
+        #ff0000 true,
+      // 64
+        false true,
+      // 128
+        false true,
+      // 256
+        false true,
+      // 512
+        false true,
+      // 1024
+        false true; // 2048
+
+    // Build cell colors until 2048 cell
+    @while $exponent <= $limit {
+      $power: pow($base, $exponent);
+
+      .cell-#{$power} {
+        // Calculate base background color
+        $gold-percent: ($exponent - 1) / ($limit - 1) * 100;
+        // mix(color 1, color2, weight of color1)
+        $mixed-background: mix($cell-gold-color, $cell-color, $gold-percent);
+
+        // Gets the nth item in a list. The first item in a Sass list is number 1. nth(10px 20px 30px, 1) => 10px
+        // Get pairs from $special-colors, the first item is background color, the second item is text color
+        $nth-color: nth($special-colors, $exponent);
+        $special-background: nth($nth-color, 1);
+        $bright-color: nth($nth-color, 2);
+
+        @if $special-background {
+          $mixed-background: mix($special-background, $mixed-background, 55%);
+        }
+
+        @if $bright-color {
+          color: $bright-text-color;
+        }
+
+        // Set background
+        background: $mixed-background;
+
+        // Add glow
+        $glow-opacity: max($exponent - 4, 0) / ($limit - 4);
+
+        @if not $special-background {
+          box-shadow: 0
+              0
+              30px
+              10px
+              rgba($cell-gold-glow-color, $glow-opacity / 1.8),
+            inset 0 0 0 1px rgba(white, $glow-opacity / 3);
+        }
+
+        // Adjust font size for bigger numbers
+        @if $power >= 100 and $power < 1000 {
+          font-size: 45px;
+
+          // Media queries placed here to avoid carrying over the rest of the logic
+          @include smaller($mobile-threshold) {
+            font-size: 25px;
+          }
+        } @else if $power >= 1000 {
+          font-size: 35px;
+
+          @include smaller($mobile-threshold) {
+            font-size: 15px;
+          }
+        }
+      }
+
+      $exponent: $exponent + 1;
     }
   }
 }
