@@ -50,7 +50,7 @@ export const newTile = (tiles, zeroTileArray) => {
 };
 
 // Move all the none zero tiles to the right, 0, 2, 4, 0 =>  0,0,2,4
-const moveNonZeroNumberToRight = tiles => {
+export const moveNonZeroNumberToRight = tiles => {
   let size = tiles[0].length;
   for (let i = 0; i < tiles[0].length; i++) {
     tiles[i] = tiles[i].filter((tiles[i].map = tile => tile !== 0));
@@ -80,7 +80,7 @@ export const moveRight = (tiles, score) => {
 };
 
 // Move all the none zero tiles to the left, 0, 2, 4, 0 =>  2,4,0,0
-const moveNonZeroNumberToLeft = tiles => {
+export const moveNonZeroNumberToLeft = tiles => {
   let size = tiles[0].length;
   for (let i = 0; i < size; i++) {
     tiles[i] = tiles[i].filter((tiles[i].map = tile => tile !== 0));
