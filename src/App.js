@@ -46,6 +46,11 @@ class App extends Component {
     });
   };
 
+  handleRestart = () => {
+    let result = initialGame(gridX, gridY);
+    this.setState({ tiles: result.tiles, zeroTileArray: result.zeroArray });
+  };
+
   render() {
     ArrowKeysReact.config({
       left: () => {
@@ -68,7 +73,7 @@ class App extends Component {
 
     return (
       <div {...ArrowKeysReact.events} tabIndex="1">
-        <Header bestScore={this.state.bestScore} />
+        <Header bestScore={this.state.bestScore} restart={this.handleRestart} />
         <Logo />
         <Score score={this.state.score} />
         <Board gridX={gridX} gridY={gridY} tiles={this.state.tiles} />
