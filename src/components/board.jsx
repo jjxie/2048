@@ -11,10 +11,19 @@ export default class Board extends Component {
     return eachRow;
   };
 
+  gameOverClassName = gameOver => {
+    if (gameOver) {
+      return "gameOver";
+    }
+  };
+
   render() {
-    const { gridX, gridY, tiles } = this.props;
+    const { gridX, gridY, tiles, gameOver } = this.props;
     return (
-      <div className="board">{this.creatGridRow(gridX, gridY, tiles)}</div>
+      <div className={`board ${this.gameOverClassName(gameOver)}`}>
+        {gameOver ? <div className="gameOverText"> Game Over </div> : ""}
+        {this.creatGridRow(gridX, gridY, tiles)}
+      </div>
     );
   }
 }

@@ -3,6 +3,7 @@
 $base-font-family: Verdana, Geneva, sans-serif;
 $base-font-size: 20px;
 $small-font-size: 16px;
+$big-font-size: 60px;
 $base-theme-color: #edc22e;
 $background-color: #faf8ef;
 $board-color: #baada0;
@@ -10,6 +11,7 @@ $text-color: #776e66;
 $bright-text-color: #f9f6f2;
 $border-radius: 5px;
 $board-font-size: 55px;
+$game-over-background-color: white;
 
 $cell-color: #eee4da;
 $cell-gold-color: #edc22e;
@@ -86,6 +88,24 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 20px;
+
+  &.gameOver {
+    height: 464px;
+    width: 476px;
+    opacity: 0.9;
+    background-color: $game-over-background-color;
+
+    .gameOverText {
+      font-size: $big-font-size;
+      position: absolute;
+      margin-top: 160px;
+      margin-left: 70px;
+      color: $text-color;
+      opacity: 0.8;
+      background-color: $game-over-background-color;
+      text-align: center;
+    }
+  }
 
   .gridRow {
     display: flex;

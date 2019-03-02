@@ -52,6 +52,20 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 20px; }
+  .board.gameOver {
+    height: 464px;
+    width: 476px;
+    opacity: 0.9;
+    background-color: white; }
+    .board.gameOver .gameOverText {
+      font-size: 60px;
+      position: absolute;
+      margin-top: 160px;
+      margin-left: 70px;
+      color: #776e66;
+      opacity: 0.8;
+      background-color: white;
+      text-align: center; }
   .board .gridRow {
     display: flex;
     justify-content: space-evenly;

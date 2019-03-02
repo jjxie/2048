@@ -5,10 +5,21 @@ export default class GridCell extends Component {
   setCellStyle = cellValue => {
     return cellClassName(cellValue);
   };
+
+  gameOverClassName = gameOver => {
+    if (gameOver) {
+      return "gameOver";
+    }
+  };
+
   render() {
-    const { tile } = this.props;
+    const { tile, gameOver } = this.props;
     return (
-      <div className={`gridCell ${this.setCellStyle(tile)}`}>
+      <div
+        className={`gridCell ${this.setCellStyle(
+          tile
+        )} ${this.gameOverClassName(gameOver)}s`}
+      >
         {tile === 0 ? "" : tile}
       </div>
     );

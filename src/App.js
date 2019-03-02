@@ -10,12 +10,19 @@ import {
   moveUp,
   moveDown,
   newTile,
-  checkGameOver
+  checkGameOver,
+  getZeroTileArray
 } from "./function.js";
 import ArrowKeysReact from "arrow-keys-react";
 
 const gridX = 4;
 const gridY = 4;
+const tilesGameOver = [
+  [4, 8, 2, 4],
+  [2, 16, 4, 2],
+  [4, 2, 8, 16],
+  [256, 128, 4, 2]
+];
 
 class App extends Component {
   constructor(props) {
@@ -31,42 +38,52 @@ class App extends Component {
 
   componentDidMount() {
     let result = initialGame(gridX, gridY);
-    this.setState({ tiles: result.tiles, zeroTileArray: result.zeroArray });
+    this.setState({
+      tiles: result.tiles,
+      zeroTileArray: result.zeroArray,
+      score: result.score
+    });
   }
 
-  handleMove = (tiles, score, zeroTileArray) => {
-    this.setState({ tiles, score, zeroTileArray }, () => {
-      if (zeroTileArray.length === 0) {
-        let gameOver = checkGameOver(this.state.tiles, this.state.score);
-        this.setState({ gameOver });
-      } else {
-        let tiles = newTile(this.state.tiles, this.state.zeroTileArray);
-        this.setState({ tiles });
-      }
-    });
+  handleMove = async (tiles, score, zeroTileArray) => {
+    await this.setState({ tiles, score, zeroTileArray });
+    if (this.state.zeroTileArray.length === 0) {
+      let gameOver = checkGameOver(this.state.tiles);
+      this.setState({ gameOver });
+    } else {
+      let tiles = await newTile(this.state.tiles, this.state.zeroTileArray);
+      this.setState({ tiles });
+    }
+    let newZeroArray = await getZeroTileArray(this.state.tiles);
+    this.setState({ zeroTileArray: newZeroArray });
   };
 
   handleRestart = () => {
     let result = initialGame(gridX, gridY);
-    this.setState({ tiles: result.tiles, zeroTileArray: result.zeroArray });
+    this.setState({
+      tiles: result.tiles,
+      zeroTileArray: result.zeroArray,
+      score: result.score,
+      gameOver: result.gameOver
+    });
   };
 
   render() {
     ArrowKeysReact.config({
-      left: () => {
-        let result = moveLeft(this.state.tiles, this.state.score);
+      left: async () => {
+        let result = await moveLeft(this.state.tiles, this.state.score);
         this.handleMove(result.tiles, result.score, result.zeroArray);
       },
-      right: () => {
-        let result = moveRight(this.state.tiles, this.state.score);
+      right: async () => {
+        let result = await moveRight(this.state.tiles, this.state.score);
         this.handleMove(result.tiles, result.score, result.zeroArray);
       },
-      up: () => {
-        let result = moveUp(this.state.tiles, this.state.score);
+      up: async () => {
+        let result = await moveUp(this.state.tiles, this.state.score);
         this.handleMove(result.tiles, result.score, result.zeroArray);
       },
-      down: () => {
-        let result = moveDown(this.state.tiles, this.state.score);
+      down: async () => {
+        let result = await moveDown(this.state.tiles, this.state.score);
         this.handleMove(result.tiles, result.score, result.zeroArray);
       }
     });
@@ -76,7 +93,12 @@ class App extends Component {
         <Header bestScore={this.state.bestScore} restart={this.handleRestart} />
         <Logo />
         <Score score={this.state.score} />
-        <Board gridX={gridX} gridY={gridY} tiles={this.state.tiles} />
+        <Board
+          gridX={gridX}
+          gridY={gridY}
+          tiles={this.state.tiles}
+          gameOver={this.state.gameOver}
+        />
       </div>
     );
   }
