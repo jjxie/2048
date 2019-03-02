@@ -11,18 +11,8 @@ export default class GridRow extends Component {
     return eachCell;
   };
 
-  gameOverClassName = gameOver => {
-    if (gameOver) {
-      return "gameOver";
-    }
-  };
-
   render() {
-    const { size, tileRow, gameOver } = this.props;
-    return (
-      <div className={`gridRow ${this.gameOverClassName(gameOver)}`}>
-        {this.creatGridCell(size, tileRow)}
-      </div>
-    );
+    const { size, tileRow } = this.props;
+    return <div className="gridRow">{this.creatGridCell(size, tileRow)}</div>;
   }
 }

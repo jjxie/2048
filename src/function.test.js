@@ -7,7 +7,8 @@ import {
   moveDown,
   moveUp,
   cellClassName,
-  checkSameValueInRow
+  checkSameValueInRow,
+  checkIfWin
 } from "./function.js";
 
 let zeroArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -19,6 +20,8 @@ let testMoveDownArray = [[4, 4, 0], [4, 0, 2], [0, 0, 2]];
 let testMoveUpArray = [[4, 4, 0], [4, 0, 2], [0, 0, 2]];
 let testGameOver = [[4, 8, 4], [2, 4, 16], [32, 2, 4]];
 let testGameNotOver = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
+let test2048 = [[4, 2048, 4], [2, 4, 4], [8, 2, 8]];
+let testNo2048 = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
 let score = 0;
 
 test("should output all index of zero item in an array", () => {
@@ -87,4 +90,14 @@ test("should return game over to true when has no same Value", () => {
 test("should return game over to false when has same Value", () => {
   const gameOver = checkSameValueInRow(testGameNotOver, true);
   expect(gameOver).toEqual(false);
+});
+
+test("should return true when contains 2048 in the tiles", () => {
+  const win = checkIfWin(test2048);
+  expect(win).toEqual(true);
+});
+
+test("should return true when contains no 2048 in the tiles", () => {
+  const win = checkIfWin(testNo2048);
+  expect(win).toEqual(false);
 });

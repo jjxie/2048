@@ -26,8 +26,10 @@ export const initialGame = (sizeX, sizeY) => {
 
   let score = 0;
   let gameOver = false;
+  let gameWin = false;
+  let showGameWin = true;
 
-  return { tiles, zeroArray, score, gameOver };
+  return { tiles, zeroArray, score, gameOver, gameWin, showGameWin };
 };
 
 // Return an array of positons that contains zero tiles
@@ -220,4 +222,17 @@ export const cellClassName = value => {
       className = "gridCell";
   }
   return className;
+};
+
+export const checkIfWin = tiles => {
+  let size = tiles[0].length;
+  let gameWin = false;
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size - 1; j++) {
+      if (tiles[i][j] === 2048) {
+        gameWin = true;
+      }
+    }
+  }
+  return gameWin;
 };

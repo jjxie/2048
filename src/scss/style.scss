@@ -11,7 +11,8 @@ $text-color: #776e66;
 $bright-text-color: #f9f6f2;
 $border-radius: 5px;
 $board-font-size: 55px;
-$game-over-background-color: white;
+$board-height: 464px;
+$board-width: 476px;
 
 $cell-color: #eee4da;
 $cell-gold-color: #edc22e;
@@ -19,7 +20,14 @@ $cell-gold-glow-color: lighten($cell-gold-color, 15%);
 $field-width: 500px;
 $mobile-threshold: $field-width + 20px;
 
-$transition-speed: 100ms;
+$game-over-background-color: white;
+$game-over-text-color: #776e66;
+$game-over-button-color: #776e66;
+$game-over-button-text-color: #f9f6f2;
+$game-win-background-color: lighten($cell-gold-color, 15%);
+$game-win-text-color: white;
+$game-win-button-color: #f9f6f2;
+$game-win-button-text-color: #776e66;
 
 %grid-cell {
   display: flex;
@@ -31,6 +39,27 @@ $transition-speed: 100ms;
   align-items: center;
   border-radius: $border-radius;
   font-size: $board-font-size;
+}
+
+%gameState {
+  height: $board-height;
+  width: $board-width;
+  font-size: $big-font-size;
+  position: absolute;
+  opacity: 0.9;
+}
+
+%gameStateButton {
+  border: none;
+  color: $text-color;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: $base-font-size;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 body {
@@ -81,8 +110,8 @@ body {
 .board {
   background-color: $board-color;
   text-align: center;
-  height: 464px;
-  width: 476px;
+  height: $board-height;
+  width: $board-width;
   margin: auto;
   border-radius: $border-radius;
   padding-top: 12px;
@@ -90,20 +119,34 @@ body {
   margin-top: 20px;
 
   &.gameOver {
-    height: 464px;
-    width: 476px;
-    opacity: 0.9;
     background-color: $game-over-background-color;
 
-    .gameOverText {
-      font-size: $big-font-size;
-      position: absolute;
-      margin-top: 160px;
-      margin-left: 70px;
-      color: $text-color;
-      opacity: 0.8;
+    .gameOver {
+      @extend %gameState;
+      color: $game-over-text-color;
       background-color: $game-over-background-color;
-      text-align: center;
+
+      .restartButton {
+        @extend %gameStateButton;
+        color: $game-over-button-text-color;
+        background-color: $game-over-button-color;
+      }
+    }
+  }
+
+  &.gameWin {
+    background-color: $game-win-background-color;
+
+    .gameWin {
+      @extend %gameState;
+      color: $game-win-text-color;
+      background-color: $game-win-background-color;
+
+      .keepGoingButton {
+        @extend %gameStateButton;
+        color: $game-win-button-text-color;
+        background-color: $game-win-button-color;
+      }
     }
   }
 

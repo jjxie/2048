@@ -11,7 +11,8 @@ import {
   moveDown,
   newTile,
   checkGameOver,
-  getZeroTileArray
+  getZeroTileArray,
+  checkIfWin
 } from "./function.js";
 import ArrowKeysReact from "arrow-keys-react";
 
@@ -23,6 +24,12 @@ const tilesGameOver = [
   [4, 2, 8, 16],
   [256, 128, 4, 2]
 ];
+const tilesGameWin = [
+  [4, 8, 2, 4],
+  [2, 16, 4, 2],
+  [1024, 1024, 8, 16],
+  [1024, 4, 4, 2]
+];
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +38,8 @@ class App extends Component {
       tiles: Array.from(Array(gridX), () => Array(gridY).fill(0)),
       zeroTileArray: [],
       gameOver: false,
+      gameWin: false,
+      showGameWin: true,
       score: 0,
       bestScore: 0
     };
@@ -39,7 +48,8 @@ class App extends Component {
   componentDidMount() {
     let result = initialGame(gridX, gridY);
     this.setState({
-      tiles: result.tiles,
+      // tiles: result.tiles,
+      tiles: tilesGameWin,
       zeroTileArray: result.zeroArray,
       score: result.score
     });
@@ -56,6 +66,8 @@ class App extends Component {
     }
     let newZeroArray = await getZeroTileArray(this.state.tiles);
     this.setState({ zeroTileArray: newZeroArray });
+    let gameWin = await checkIfWin(this.state.tiles);
+    this.setState({ gameWin });
   };
 
   handleRestart = () => {
@@ -64,8 +76,14 @@ class App extends Component {
       tiles: result.tiles,
       zeroTileArray: result.zeroArray,
       score: result.score,
-      gameOver: result.gameOver
+      gameOver: result.gameOver,
+      gameWin: result.gameWin,
+      showGameWin: result.showGameWin
     });
+  };
+
+  handleWin = () => {
+    this.setState({ showGameWin: false });
   };
 
   render() {
@@ -98,6 +116,10 @@ class App extends Component {
           gridY={gridY}
           tiles={this.state.tiles}
           gameOver={this.state.gameOver}
+          gameWin={this.state.gameWin}
+          showGameWin={this.state.showGameWin}
+          handleWin={this.handleWin}
+          restart={this.handleRestart}
         />
       </div>
     );

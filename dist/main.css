@@ -9,6 +9,25 @@
   border-radius: 5px;
   font-size: 55px; }
 
+.board.gameOver .gameOver, .board.gameWin .gameWin {
+  height: 464px;
+  width: 476px;
+  font-size: 60px;
+  position: absolute;
+  opacity: 0.9; }
+
+.board.gameOver .gameOver .restartButton, .board.gameWin .gameWin .keepGoingButton {
+  border: none;
+  color: #776e66;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px; }
+
 body {
   font-family: Verdana, Geneva, sans-serif;
   background-color: #faf8ef; }
@@ -53,19 +72,21 @@ body {
   padding-bottom: 12px;
   margin-top: 20px; }
   .board.gameOver {
-    height: 464px;
-    width: 476px;
-    opacity: 0.9;
     background-color: white; }
-    .board.gameOver .gameOverText {
-      font-size: 60px;
-      position: absolute;
-      margin-top: 160px;
-      margin-left: 70px;
+    .board.gameOver .gameOver {
       color: #776e66;
-      opacity: 0.8;
-      background-color: white;
-      text-align: center; }
+      background-color: white; }
+      .board.gameOver .gameOver .restartButton {
+        color: #f9f6f2;
+        background-color: #776e66; }
+  .board.gameWin {
+    background-color: #f3d774; }
+    .board.gameWin .gameWin {
+      color: white;
+      background-color: #f3d774; }
+      .board.gameWin .gameWin .keepGoingButton {
+        color: #776e66;
+        background-color: #f9f6f2; }
   .board .gridRow {
     display: flex;
     justify-content: space-evenly;
