@@ -20,8 +20,8 @@ import ArrowKeysReact from "arrow-keys-react";
 const gridX = 4;
 const gridY = 4;
 const tilesGameOver = [
-  [4, 8, 2, 4],
-  [2, 16, 4, 2],
+  [4, 8, 2, 2],
+  [2, 16, 4, 8],
   [4, 2, 8, 16],
   [256, 128, 4, 2]
 ];
@@ -53,19 +53,29 @@ class App extends Component {
     let result = initialGame(gridX, gridY);
     this.setState({
       tiles: result.tiles,
-      zeroTileArray: result.zeroArray,
-      score: result.score,
-      gameOver: result.gameOver,
-      gameWin: result.gameWin,
-      showGameWin: result.showGameWin
+      // tiles: tilesGameWin,
+      zeroTileArray: result.zeroArray
     });
   }
+
+  checkIfGameOver = () => {
+    let gameOver = checkGameOver(this.state.tiles);
+    if (gameOver) {
+      this.setState({ gameOver, newtileRow: -1, newtileColumn: -1 });
+    }
+  };
+
+  checkIfGameWin = () => {
+    let gameWin = checkIfWin(this.state.tiles);
+    if (gameWin && this.state.showGameWin) {
+      this.setState({ gameWin, newtileRow: -1, newtileColumn: -1 });
+    }
+  };
 
   handleMove = async (tiles, score, zeroTileArray) => {
     await this.setState({ tiles, score, zeroTileArray });
     if (this.state.zeroTileArray.length === 0) {
-      let gameOver = checkGameOver(this.state.tiles);
-      this.setState({ gameOver });
+      await this.checkIfGameOver();
     } else {
       let result = await newTile(this.state.tiles, this.state.zeroTileArray);
       this.setState({
@@ -76,8 +86,10 @@ class App extends Component {
     }
     let newZeroArray = await getZeroTileArray(this.state.tiles);
     this.setState({ zeroTileArray: newZeroArray });
-    let gameWin = await checkIfWin(this.state.tiles);
-    this.setState({ gameWin });
+    if (this.state.zeroTileArray.length === 0) {
+      await this.checkIfGameOver();
+    }
+    await this.checkIfGameWin();
   };
 
   handleRestart = () => {
@@ -88,7 +100,9 @@ class App extends Component {
       score: result.score,
       gameOver: result.gameOver,
       gameWin: result.gameWin,
-      showGameWin: result.showGameWin
+      showGameWin: result.showGameWin,
+      newtileRow: result.newtileRow,
+      newtileColumn: result.newtileColumn
     });
   };
 

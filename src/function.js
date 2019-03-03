@@ -28,8 +28,19 @@ export const initialGame = (sizeX, sizeY) => {
   let gameOver = false;
   let gameWin = false;
   let showGameWin = true;
+  let newtileRow = -1;
+  let newtileColumn = -1;
 
-  return { tiles, zeroArray, score, gameOver, gameWin, showGameWin };
+  return {
+    tiles,
+    zeroArray,
+    score,
+    gameOver,
+    gameWin,
+    showGameWin,
+    newtileRow,
+    newtileColumn
+  };
 };
 
 // Return an array of positons that contains zero tiles
