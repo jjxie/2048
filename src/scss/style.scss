@@ -196,6 +196,7 @@ body {
         @include animation-fill-mode(backwards);
       }
     }
+
     // Movement transition
     @include transition($transition-speed ease-in-out);
     -webkit-transition-property: -webkit-transform;

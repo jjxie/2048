@@ -9,7 +9,10 @@ import {
   cellClassName,
   checkSameValueInRow,
   checkIfWin,
-  checkIfCouldMove
+  checkIfCouldMove,
+  getMergedPositionToRight,
+  getMergedPositionToLeft,
+  transformMergedArray
 } from "./function.js";
 
 let zeroArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -122,4 +125,29 @@ test("should could move when game is win but keep playing", () => {
 test("should could not move when in game is win message page", () => {
   const couldMove = checkIfCouldMove(false, true, true);
   expect(couldMove).toEqual(false);
+});
+
+test("should output a new merged tile positions to the right", () => {
+  const mergedTilePostion = getMergedPositionToRight(2, [0, 4, 0, 4], [3, 1]);
+  expect(mergedTilePostion).toEqual([11, 10]);
+});
+
+test("should output empty merged tile positions", () => {
+  const mergedTilePostion = getMergedPositionToRight(0, [0, 4, 2, 2], []);
+  expect(mergedTilePostion).toEqual([]);
+});
+
+test("should output a new merged tile positions to the Left", () => {
+  const mergedTilePostion = getMergedPositionToLeft(2, [4, 0, 4, 0], [0, 2]);
+  expect(mergedTilePostion).toEqual([8, 9]);
+});
+
+test("should output empty merged tile positions", () => {
+  const mergedTilePostion = getMergedPositionToLeft(0, [0, 4, 2, 2], []);
+  expect(mergedTilePostion).toEqual([]);
+});
+
+test("should transform merged tile positions", () => {
+  const transformedPostion = transformMergedArray(4, [0, 2, 7, 15]);
+  expect(transformedPostion).toEqual([0, 8, 13, 15]);
 });

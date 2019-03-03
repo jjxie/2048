@@ -52,8 +52,8 @@ class App extends Component {
   componentDidMount() {
     let result = initialGame(gridX, gridY);
     this.setState({
-      tiles: result.tiles,
-      // tiles: tilesGameWin,
+      // tiles: result.tiles,
+      tiles: tilesGameWin,
       zeroTileArray: result.zeroArray
     });
   }
@@ -72,8 +72,8 @@ class App extends Component {
     }
   };
 
-  handleMove = async (tiles, score, zeroTileArray) => {
-    await this.setState({ tiles, score, zeroTileArray });
+  handleMove = async (tiles, score, zeroTileArray, mergedTiles) => {
+    await this.setState({ tiles, score, zeroTileArray, mergedTiles });
     if (this.state.zeroTileArray.length === 0) {
       await this.checkIfGameOver();
     } else {
@@ -102,7 +102,8 @@ class App extends Component {
       gameWin: result.gameWin,
       showGameWin: result.showGameWin,
       newtileRow: result.newtileRow,
-      newtileColumn: result.newtileColumn
+      newtileColumn: result.newtileColumn,
+      mergedTiles: result.mergedTiles
     });
   };
 
@@ -121,19 +122,39 @@ class App extends Component {
       ArrowKeysReact.config({
         left: async () => {
           let result = await moveLeft(this.state.tiles, this.state.score);
-          this.handleMove(result.tiles, result.score, result.zeroArray);
+          this.handleMove(
+            result.tiles,
+            result.score,
+            result.zeroArray,
+            result.mergedArray
+          );
         },
         right: async () => {
           let result = await moveRight(this.state.tiles, this.state.score);
-          this.handleMove(result.tiles, result.score, result.zeroArray);
+          this.handleMove(
+            result.tiles,
+            result.score,
+            result.zeroArray,
+            result.mergedArray
+          );
         },
         up: async () => {
           let result = await moveUp(this.state.tiles, this.state.score);
-          this.handleMove(result.tiles, result.score, result.zeroArray);
+          this.handleMove(
+            result.tiles,
+            result.score,
+            result.zeroArray,
+            result.mergedArray
+          );
         },
         down: async () => {
           let result = await moveDown(this.state.tiles, this.state.score);
-          this.handleMove(result.tiles, result.score, result.zeroArray);
+          this.handleMove(
+            result.tiles,
+            result.score,
+            result.zeroArray,
+            result.mergedArray
+          );
         }
       });
     } else {
@@ -161,6 +182,7 @@ class App extends Component {
           handleRestart={this.handleRestart}
           newtileRow={this.state.newtileRow}
           newtileColumn={this.state.newtileColumn}
+          mergedTiles={this.state.mergedTiles}
         />
       </div>
     );

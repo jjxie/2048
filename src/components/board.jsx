@@ -3,8 +3,23 @@ import GridRow from "./gridRow.jsx";
 const uuidv4 = require("uuid/v4");
 
 export default class Board extends Component {
-  creatGridRow = (gridX, gridY, tiles, newtileRow, newtileColumn) => {
+  creatGridRow = (
+    gridX,
+    gridY,
+    tiles,
+    newtileRow,
+    newtileColumn,
+    mergedTiles
+  ) => {
     let eachRow = [];
+    let merged = Array.from(Array(gridX), () => Array(gridY).fill(0));
+    if (mergedTiles !== undefined || mergedTiles.length !== 0) {
+      for (let i = 0; i < mergedTiles.length; i++) {
+        let row = Math.floor(mergedTiles[i] / gridX);
+        let column = mergedTiles[i] % gridY;
+        merged[row][column] = 1;
+      }
+    }
     for (let i = 0; i < gridY; i++) {
       eachRow.push(
         <GridRow
@@ -12,6 +27,7 @@ export default class Board extends Component {
           key={uuidv4()}
           tileRow={tiles[i]}
           newtileColumn={i === newtileRow ? newtileColumn : "-1"}
+          mergedTiles={merged[i]}
         />
       );
     }
@@ -40,7 +56,8 @@ export default class Board extends Component {
       handleWin,
       handleRestart,
       newtileRow,
-      newtileColumn
+      newtileColumn,
+      mergedTiles
     } = this.props;
     return (
       <div className={this.boardClassName(gameOver, gameWin, showGameWin)}>
@@ -64,7 +81,14 @@ export default class Board extends Component {
         ) : (
           ""
         )}
-        {this.creatGridRow(gridX, gridY, tiles, newtileRow, newtileColumn)}
+        {this.creatGridRow(
+          gridX,
+          gridY,
+          tiles,
+          newtileRow,
+          newtileColumn,
+          mergedTiles
+        )}
       </div>
     );
   }
