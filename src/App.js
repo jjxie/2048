@@ -13,6 +13,7 @@ import {
 } from "./gameState.js";
 import { moveRight, moveLeft, moveUp, moveDown } from "./move.js";
 import ArrowKeysReact from "arrow-keys-react";
+import { Swipeable } from "react-swipeable";
 
 const gridX = 4;
 const gridY = 4;
@@ -74,7 +75,11 @@ class App extends Component {
     }
   };
 
-  handleMove = async (tiles, score, zeroTileArray, mergedTiles) => {
+  handleMove = async result => {
+    let tiles = result.tiles;
+    let score = result.score;
+    let zeroTileArray = result.zeroArray;
+    let mergedTiles = result.mergedArray;
     await this.setState({ tiles, score, zeroTileArray, mergedTiles });
     if (this.state.zeroTileArray.length === 0) {
       await this.checkIfGameOver();
@@ -114,6 +119,8 @@ class App extends Component {
   };
 
   render() {
+    let config;
+    //  Keyboard input config
     if (
       checkIfCouldMove(
         this.state.gameOver,
@@ -124,41 +131,41 @@ class App extends Component {
       ArrowKeysReact.config({
         left: async () => {
           let result = await moveLeft(this.state.tiles, this.state.score);
-          this.handleMove(
-            result.tiles,
-            result.score,
-            result.zeroArray,
-            result.mergedArray
-          );
+          this.handleMove(result);
         },
         right: async () => {
           let result = await moveRight(this.state.tiles, this.state.score);
-          this.handleMove(
-            result.tiles,
-            result.score,
-            result.zeroArray,
-            result.mergedArray
-          );
+          this.handleMove(result);
         },
         up: async () => {
           let result = await moveUp(this.state.tiles, this.state.score);
-          this.handleMove(
-            result.tiles,
-            result.score,
-            result.zeroArray,
-            result.mergedArray
-          );
+          this.handleMove(result);
         },
         down: async () => {
           let result = await moveDown(this.state.tiles, this.state.score);
-          this.handleMove(
-            result.tiles,
-            result.score,
-            result.zeroArray,
-            result.mergedArray
-          );
+          this.handleMove(result);
         }
       });
+      // Swipe config
+      config = {
+        onSwipedLeft: async () => {
+          let result = await moveLeft(this.state.tiles, this.state.score);
+          this.handleMove(result);
+        },
+        onSwipedRight: async () => {
+          let result = await moveRight(this.state.tiles, this.state.score);
+          this.handleMove(result);
+        },
+        onSwipedUp: async () => {
+          let result = await moveUp(this.state.tiles, this.state.score);
+          this.handleMove(result);
+        },
+        onSwipedDown: async () => {
+          let result = await moveDown(this.state.tiles, this.state.score);
+          this.handleMove(result);
+        },
+        trackMouse: true
+      };
     } else {
       ArrowKeysReact.config({
         left: () => {},
@@ -166,6 +173,13 @@ class App extends Component {
         up: () => {},
         down: () => {}
       });
+      config = {
+        onSwipedLeft: () => {},
+        onSwipedRight: () => {},
+        onSwipedUp: () => {},
+        onSwipedDown: () => {},
+        trackMouse: true
+      };
     }
 
     return (
@@ -173,19 +187,21 @@ class App extends Component {
         <Header score={this.state.scoreArray} restart={this.handleRestart} />
         <Logo />
         <Score score={this.state.score} />
-        <Board
-          gridX={gridX}
-          gridY={gridY}
-          tiles={this.state.tiles}
-          gameOver={this.state.gameOver}
-          gameWin={this.state.gameWin}
-          showGameWin={this.state.showGameWin}
-          handleWin={this.handleWin}
-          handleRestart={this.handleRestart}
-          newtileRow={this.state.newtileRow}
-          newtileColumn={this.state.newtileColumn}
-          mergedTiles={this.state.mergedTiles}
-        />
+        <Swipeable {...config}>
+          <Board
+            gridX={gridX}
+            gridY={gridY}
+            tiles={this.state.tiles}
+            gameOver={this.state.gameOver}
+            gameWin={this.state.gameWin}
+            showGameWin={this.state.showGameWin}
+            handleWin={this.handleWin}
+            handleRestart={this.handleRestart}
+            newtileRow={this.state.newtileRow}
+            newtileColumn={this.state.newtileColumn}
+            mergedTiles={this.state.mergedTiles}
+          />
+        </Swipeable>
       </div>
     );
   }
