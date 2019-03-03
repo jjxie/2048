@@ -8,7 +8,8 @@ import {
   moveUp,
   cellClassName,
   checkSameValueInRow,
-  checkIfWin
+  checkIfWin,
+  checkIfCouldMove
 } from "./function.js";
 
 let zeroArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -22,6 +23,7 @@ let testGameOver = [[4, 8, 4], [2, 4, 16], [32, 2, 4]];
 let testGameNotOver = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
 let test2048 = [[4, 2048, 4], [2, 4, 4], [8, 2, 8]];
 let testNo2048 = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
+
 let score = 0;
 
 test("should output all index of zero item in an array", () => {
@@ -100,4 +102,24 @@ test("should return true when contains 2048 in the tiles", () => {
 test("should return true when contains no 2048 in the tiles", () => {
   const win = checkIfWin(testNo2048);
   expect(win).toEqual(false);
+});
+
+test("should could move when game is not over", () => {
+  const couldMove = checkIfCouldMove(false, false, false);
+  expect(couldMove).toEqual(true);
+});
+
+test("should could not move when game is over", () => {
+  const couldMove = checkIfCouldMove(true, false, false);
+  expect(couldMove).toEqual(false);
+});
+
+test("should could move when game is win but keep playing", () => {
+  const couldMove = checkIfCouldMove(false, true, false);
+  expect(couldMove).toEqual(true);
+});
+
+test("should could not move when in game is win message page", () => {
+  const couldMove = checkIfCouldMove(false, true, true);
+  expect(couldMove).toEqual(false);
 });

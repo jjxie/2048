@@ -11,16 +11,15 @@ export default class Board extends Component {
     return eachRow;
   };
 
-  gameOverClassName = gameOver => {
+  boardClassName = (gameOver, gameWin, showGameWin) => {
+    let className = "board";
     if (gameOver) {
-      return "gameOver";
+      className = className.concat(" gameOver");
     }
-  };
-
-  gameWinClassName = (gameWin, showGameWin) => {
     if (gameWin && showGameWin) {
-      return "gameWin";
+      className = className.concat(" gameWin");
     }
+    return className;
   };
 
   render() {
@@ -32,18 +31,14 @@ export default class Board extends Component {
       gameWin,
       showGameWin,
       handleWin,
-      restart
+      handleRestart
     } = this.props;
     return (
-      <div
-        className={`board ${this.gameOverClassName(
-          gameOver
-        )} ${this.gameWinClassName(gameWin, showGameWin)}`}
-      >
+      <div className={this.boardClassName(gameOver, gameWin, showGameWin)}>
         {gameOver ? (
           <div className="gameOver">
             <br /> <br /> Game Over <br />
-            <button className="restartButton" onClick={() => restart()}>
+            <button className="restartButton" onClick={() => handleRestart()}>
               Restart
             </button>
           </div>
@@ -51,7 +46,7 @@ export default class Board extends Component {
           ""
         )}
         {gameWin && showGameWin ? (
-          <div className="gameWin" id="gameWin">
+          <div className="gameWin">
             <br /> <br /> You Win! <br />
             <button className="keepGoingButton" onClick={() => handleWin()}>
               Keep Going

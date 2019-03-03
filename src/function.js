@@ -236,3 +236,14 @@ export const checkIfWin = tiles => {
   }
   return gameWin;
 };
+
+export const checkIfCouldMove = (gameOver, gameWin, showGameWin) => {
+  let couldMove = true;
+  if (gameOver) {
+    couldMove = false;
+  }
+  if (gameWin && showGameWin) {
+    couldMove = false;
+  }
+  return couldMove;
+};

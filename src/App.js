@@ -12,7 +12,8 @@ import {
   newTile,
   checkGameOver,
   getZeroTileArray,
-  checkIfWin
+  checkIfWin,
+  checkIfCouldMove
 } from "./function.js";
 import ArrowKeysReact from "arrow-keys-react";
 
@@ -87,24 +88,39 @@ class App extends Component {
   };
 
   render() {
-    ArrowKeysReact.config({
-      left: async () => {
-        let result = await moveLeft(this.state.tiles, this.state.score);
-        this.handleMove(result.tiles, result.score, result.zeroArray);
-      },
-      right: async () => {
-        let result = await moveRight(this.state.tiles, this.state.score);
-        this.handleMove(result.tiles, result.score, result.zeroArray);
-      },
-      up: async () => {
-        let result = await moveUp(this.state.tiles, this.state.score);
-        this.handleMove(result.tiles, result.score, result.zeroArray);
-      },
-      down: async () => {
-        let result = await moveDown(this.state.tiles, this.state.score);
-        this.handleMove(result.tiles, result.score, result.zeroArray);
-      }
-    });
+    if (
+      checkIfCouldMove(
+        this.state.gameOver,
+        this.state.gameWin,
+        this.state.showGameWin
+      )
+    ) {
+      ArrowKeysReact.config({
+        left: async () => {
+          let result = await moveLeft(this.state.tiles, this.state.score);
+          this.handleMove(result.tiles, result.score, result.zeroArray);
+        },
+        right: async () => {
+          let result = await moveRight(this.state.tiles, this.state.score);
+          this.handleMove(result.tiles, result.score, result.zeroArray);
+        },
+        up: async () => {
+          let result = await moveUp(this.state.tiles, this.state.score);
+          this.handleMove(result.tiles, result.score, result.zeroArray);
+        },
+        down: async () => {
+          let result = await moveDown(this.state.tiles, this.state.score);
+          this.handleMove(result.tiles, result.score, result.zeroArray);
+        }
+      });
+    } else {
+      ArrowKeysReact.config({
+        left: () => {},
+        right: () => {},
+        up: () => {},
+        down: () => {}
+      });
+    }
 
     return (
       <div {...ArrowKeysReact.events} tabIndex="1">
@@ -119,7 +135,7 @@ class App extends Component {
           gameWin={this.state.gameWin}
           showGameWin={this.state.showGameWin}
           handleWin={this.handleWin}
-          restart={this.handleRestart}
+          handleRestart={this.handleRestart}
         />
       </div>
     );
