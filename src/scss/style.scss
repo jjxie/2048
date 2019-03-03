@@ -29,6 +29,8 @@ $game-win-text-color: white;
 $game-win-button-color: #f9f6f2;
 $game-win-button-text-color: #776e66;
 
+$transition-speed: 100ms;
+
 %grid-cell {
   display: flex;
   background-color: rgba($cell-color, 0.35);
@@ -157,7 +159,48 @@ body {
 
     .gridCell {
       @extend %grid-cell;
+
+      @include keyframes(appear) {
+        0% {
+          opacity: 0;
+          @include transform(scale(0));
+        }
+
+        100% {
+          opacity: 1;
+          @include transform(scale(1));
+        }
+      }
+
+      &.cell-new {
+        @include animation(appear 200ms ease $transition-speed);
+        @include animation-fill-mode(backwards);
+      }
+
+      @include keyframes(pop) {
+        0% {
+          @include transform(scale(0));
+        }
+
+        50% {
+          @include transform(scale(1.2));
+        }
+
+        100% {
+          @include transform(scale(1));
+        }
+      }
+
+      &.cell-merged {
+        @include animation(pop 200ms ease $transition-speed);
+        @include animation-fill-mode(backwards);
+      }
     }
+    // Movement transition
+    @include transition($transition-speed ease-in-out);
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
 
     // This section is forked from https://github.com/claudiopro/2048-react
     $base: 2;

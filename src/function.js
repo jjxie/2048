@@ -53,7 +53,7 @@ export const newTile = async (tiles, zeroTileArray) => {
   let quotient = await Math.floor(newPosition / size);
   let remainder = (await newPosition) % size;
   tiles[quotient][remainder] = (await Math.random()) < 0.9 ? 2 : 4;
-  return tiles;
+  return { tiles: tiles, row: quotient, column: remainder };
 };
 
 // Move all the none zero tiles to the right, 0, 2, 4, 0 =>  0, 0, 2, 4

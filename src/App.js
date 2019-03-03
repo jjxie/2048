@@ -42,17 +42,22 @@ class App extends Component {
       gameWin: false,
       showGameWin: true,
       score: 0,
-      bestScore: 0
+      bestScore: 0,
+      newtileRow: -1,
+      newtileColumn: -1,
+      mergedTiles: []
     };
   }
 
   componentDidMount() {
     let result = initialGame(gridX, gridY);
     this.setState({
-      // tiles: result.tiles,
-      tiles: tilesGameWin,
+      tiles: result.tiles,
       zeroTileArray: result.zeroArray,
-      score: result.score
+      score: result.score,
+      gameOver: result.gameOver,
+      gameWin: result.gameWin,
+      showGameWin: result.showGameWin
     });
   }
 
@@ -62,8 +67,12 @@ class App extends Component {
       let gameOver = checkGameOver(this.state.tiles);
       this.setState({ gameOver });
     } else {
-      let tiles = await newTile(this.state.tiles, this.state.zeroTileArray);
-      this.setState({ tiles });
+      let result = await newTile(this.state.tiles, this.state.zeroTileArray);
+      this.setState({
+        tiles: result.tiles,
+        newtileRow: result.row,
+        newtileColumn: result.column
+      });
     }
     let newZeroArray = await getZeroTileArray(this.state.tiles);
     this.setState({ zeroTileArray: newZeroArray });
@@ -136,6 +145,8 @@ class App extends Component {
           showGameWin={this.state.showGameWin}
           handleWin={this.handleWin}
           handleRestart={this.handleRestart}
+          newtileRow={this.state.newtileRow}
+          newtileColumn={this.state.newtileColumn}
         />
       </div>
     );

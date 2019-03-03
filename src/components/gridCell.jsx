@@ -2,14 +2,19 @@ import React, { Component } from "react";
 import { cellClassName } from "../function.js";
 
 export default class GridCell extends Component {
-  setCellStyle = cellValue => {
-    return cellClassName(cellValue);
+  setClassName = (cellValue, newTile) => {
+    let valueClass = cellClassName(cellValue);
+    let className = "gridCell ".concat(valueClass);
+    if (newTile) {
+      className = className.concat(" cell-new");
+    }
+    return className;
   };
 
   render() {
-    const { tile } = this.props;
+    const { tile, newTile } = this.props;
     return (
-      <div className={`gridCell ${this.setCellStyle(tile)}`}>
+      <div className={this.setClassName(tile, newTile)}>
         {tile === 0 ? "" : tile}
       </div>
     );
