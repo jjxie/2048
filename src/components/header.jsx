@@ -1,17 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Header = props => {
-  return (
-    <div className="header">
-      <p className="bestScore">Best score: {Math.max(props.score)}</p>
-      <img
-        src={`../icons/restart.png`}
-        alt="restart"
-        title="Restart"
-        onClick={props.restart}
-      />
-    </div>
-  );
-};
-
-export default Header;
+export default class Header extends Component {
+  getBestScore = scores => {
+    let arr = Object.values(scores);
+    let max = Math.max(...arr);
+    return max;
+  };
+  render() {
+    const { score, restart } = this.props;
+    return (
+      <div className="header">
+        <p className="bestScore">Best score: {this.getBestScore(score)}</p>
+        <img
+          src={`../icons/restart.png`}
+          alt="restart"
+          title="Restart"
+          onClick={restart}
+        />
+      </div>
+    );
+  }
+}

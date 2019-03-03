@@ -18,7 +18,7 @@ const gridX = 4;
 const gridY = 4;
 const tilesGameOver = [
   [4, 8, 2, 2],
-  [2, 16, 4, 8],
+  [2, 16, 32, 8],
   [4, 2, 8, 16],
   [256, 128, 4, 2]
 ];
@@ -49,8 +49,8 @@ class App extends Component {
   componentDidMount() {
     let result = initialGame(gridX, gridY);
     this.setState({
-      // tiles: result.tiles,
-      tiles: tilesGameOver,
+      tiles: result.tiles,
+      // tiles: tilesGameOver,
       zeroTileArray: result.zeroArray
     });
   }
@@ -61,7 +61,8 @@ class App extends Component {
       this.setState({
         gameOver,
         newtileRow: -1,
-        newtileColumn: -1
+        newtileColumn: -1,
+        scoreArray: [...this.state.scoreArray, this.state.score]
       });
     }
   };
