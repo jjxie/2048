@@ -5,16 +5,13 @@ import Score from "./components/score.jsx";
 import Board from "./components/board.jsx";
 import {
   initialGame,
-  moveRight,
-  moveLeft,
-  moveUp,
-  moveDown,
   newTile,
   checkGameOver,
   getZeroTileArray,
   checkIfWin,
   checkIfCouldMove
-} from "./function.js";
+} from "./gameState.js";
+import { moveRight, moveLeft, moveUp, moveDown } from "./move.js";
 import ArrowKeysReact from "arrow-keys-react";
 
 const gridX = 4;
@@ -42,7 +39,7 @@ class App extends Component {
       gameWin: false,
       showGameWin: true,
       score: 0,
-      bestScore: 0,
+      scoreArray: [0],
       newtileRow: -1,
       newtileColumn: -1,
       mergedTiles: []
@@ -53,15 +50,19 @@ class App extends Component {
     let result = initialGame(gridX, gridY);
     this.setState({
       // tiles: result.tiles,
-      tiles: tilesGameWin,
+      tiles: tilesGameOver,
       zeroTileArray: result.zeroArray
     });
   }
 
-  checkIfGameOver = () => {
+  checkIfGameOver = async () => {
     let gameOver = checkGameOver(this.state.tiles);
     if (gameOver) {
-      this.setState({ gameOver, newtileRow: -1, newtileColumn: -1 });
+      this.setState({
+        gameOver,
+        newtileRow: -1,
+        newtileColumn: -1
+      });
     }
   };
 
@@ -168,7 +169,7 @@ class App extends Component {
 
     return (
       <div {...ArrowKeysReact.events} tabIndex="1">
-        <Header bestScore={this.state.bestScore} restart={this.handleRestart} />
+        <Header score={this.state.scoreArray} restart={this.handleRestart} />
         <Logo />
         <Score score={this.state.score} />
         <Board

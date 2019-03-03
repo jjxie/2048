@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { cellClassName } from "../function.js";
+import { cellClassName } from "../cellStyle.js";
 
 export default class GridCell extends Component {
   setClassName = (cellValue, newTile, mergedTiles) => {
