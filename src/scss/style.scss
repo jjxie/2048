@@ -13,6 +13,10 @@ $border-radius: 5px;
 $board-font-size: 55px;
 $board-height: 464px;
 $board-width: 476px;
+$small-board-height: 320px;
+$small-board-width: 320px;
+$small-gameState-font-size: 45px;
+$small-gameState-button-font-size: 18px;
 
 $cell-color: #eee4da;
 $cell-gold-color: #edc22e;
@@ -40,7 +44,6 @@ $transition-speed: 100ms;
   justify-content: center;
   align-items: center;
   border-radius: $border-radius;
-  font-size: $board-font-size;
 }
 
 %gameState {
@@ -58,8 +61,8 @@ $transition-speed: 100ms;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: $base-font-size;
   margin: 4px 2px;
+  font-size: $base-font-size;
   cursor: pointer;
   border-radius: 4px;
 }
@@ -119,6 +122,43 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 20px;
+
+  @include smaller($mobile-threshold) {
+    height: $small-board-height;
+    width: $small-board-width;
+
+    .gridRow {
+      .gridCell {
+        height: 56px;
+        width: 56px;
+        padding: 6px;
+      }
+    }
+
+    &.gameOver {
+      .gameOver {
+        height: $small-board-height;
+        width: $small-board-width;
+        font-size: $small-gameState-font-size;
+
+        .restartButton {
+          font-size: $small-gameState-button-font-size;
+        }
+      }
+    }
+
+    &.gameWin {
+      .gameWin {
+        height: $small-board-height;
+        width: $small-board-width;
+        font-size: $small-gameState-font-size;
+
+        .keepGoingButton {
+          font-size: $small-gameState-button-font-size;
+        }
+      }
+    }
+  }
 
   &.gameOver {
     background-color: $game-over-background-color;
@@ -271,11 +311,16 @@ body {
             inset 0 0 0 1px rgba(white, $glow-opacity / 3);
         }
 
-        // Adjust font size for bigger numbers
-        @if $power >= 100 and $power < 1000 {
+        // Define font size and media font size
+        @if $power > 0 and $power < 100 {
+          font-size: 55px;
+
+          @include smaller($mobile-threshold) {
+            font-size: 35px;
+          }
+        } @else if $power >= 100 and $power < 1000 {
           font-size: 45px;
 
-          // Media queries placed here to avoid carrying over the rest of the logic
           @include smaller($mobile-threshold) {
             font-size: 25px;
           }

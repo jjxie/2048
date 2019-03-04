@@ -51,7 +51,7 @@ class App extends Component {
     let result = initialGame(gridX, gridY);
     this.setState({
       tiles: result.tiles,
-      // tiles: tilesGameOver,
+      // tiles: tilesGameWin,
       zeroTileArray: result.zeroArray
     });
   }
