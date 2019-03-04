@@ -87,8 +87,7 @@ class App extends Component {
       this.setState({
         gameOver,
         newtileRow: -1,
-        newtileColumn: -1,
-        scoreArray: [...this.state.scoreArray, this.state.score]
+        newtileColumn: -1
       });
     }
   };
@@ -101,11 +100,20 @@ class App extends Component {
   };
 
   handleMove = async result => {
-    let tiles = result.tiles;
-    let score = result.score;
-    let zeroTileArray = result.zeroArray;
-    let mergedTiles = result.mergedArray;
-    await this.setState({ tiles, score, zeroTileArray, mergedTiles });
+    await this.setState(
+      {
+        tiles: result.tiles,
+        score: result.score,
+        zeroTileArray: result.zeroArray,
+        mergedTiles: result.mergedArray
+      },
+      () => {
+        let scores = [...new Set(this.state.scoreArray)];
+        this.setState({
+          scoreArray: scores.concat(this.state.score)
+        });
+      }
+    );
     if (this.state.zeroTileArray.length === 0) {
       await this.checkIfGameOver();
     } else {

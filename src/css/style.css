@@ -69,7 +69,8 @@ body {
   border-radius: 5px;
   padding-top: 12px;
   padding-bottom: 12px;
-  margin-top: 20px; }
+  margin-top: 20px;
+  color: #776e66; }
   @media screen and (max-width: 520px) {
     .board {
       height: 320px;
