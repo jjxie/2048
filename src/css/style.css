@@ -6,8 +6,26 @@
   padding: 12px;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
-  font-size: 55px; }
+  border-radius: 5px; }
+
+.board.gameOver .gameOver, .board.gameWin .gameWin {
+  height: 464px;
+  width: 476px;
+  font-size: 60px;
+  position: absolute;
+  opacity: 0.9; }
+
+.board.gameOver .gameOver .restartButton, .board.gameWin .gameWin .keepGoingButton {
+  border: none;
+  color: #776e66;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 4px; }
 
 body {
   font-family: Verdana, Geneva, sans-serif;
@@ -52,33 +70,186 @@ body {
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 20px; }
+  @media screen and (max-width: 520px) {
+    .board {
+      height: 320px;
+      width: 320px; }
+      .board .gridRow .gridCell {
+        height: 56px;
+        width: 56px;
+        padding: 6px; }
+      .board.gameOver .gameOver {
+        height: 320px;
+        width: 320px;
+        font-size: 45px; }
+        .board.gameOver .gameOver .restartButton {
+          font-size: 18px; }
+      .board.gameWin .gameWin {
+        height: 320px;
+        width: 320px;
+        font-size: 45px; }
+        .board.gameWin .gameWin .keepGoingButton {
+          font-size: 18px; } }
   .board.gameOver {
-    height: 464px;
-    width: 476px;
-    opacity: 0.3;
+    background-color: white; }
+    .board.gameOver .gameOver {
+      color: #776e66;
+      background-color: white; }
+      .board.gameOver .gameOver .restartButton {
+        color: #f9f6f2;
+        background-color: #776e66; }
+  .board.gameWin {
     background-color: #f3d774; }
+    .board.gameWin .gameWin {
+      color: white;
+      background-color: #f3d774; }
+      .board.gameWin .gameWin .keepGoingButton {
+        color: #776e66;
+        background-color: #f9f6f2; }
   .board .gridRow {
     display: flex;
     justify-content: space-evenly;
-    padding: 6px; }
+    padding: 6px;
+    -webkit-transition: 100ms ease-in-out;
+    -moz-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform; }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+    .board .gridRow .gridCell.cell-new {
+      -webkit-animation: appear 200ms ease 100ms;
+      -moz-animation: appear 200ms ease 100ms;
+      animation: appear 200ms ease 100ms;
+      -webkit-animation-fill-mode: backwards;
+      -moz-animation-fill-mode: backwards;
+      animation-fill-mode: backwards; }
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    transform: scale(1.2); }
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@-moz-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    transform: scale(1.2); }
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    transform: scale(0); }
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    transform: scale(1.2); }
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    transform: scale(1); } }
+    .board .gridRow .gridCell.cell-merged {
+      -webkit-animation: pop 200ms ease 100ms;
+      -moz-animation: pop 200ms ease 100ms;
+      animation: pop 200ms ease 100ms;
+      -webkit-animation-fill-mode: backwards;
+      -moz-animation-fill-mode: backwards;
+      animation-fill-mode: backwards; }
     .board .gridRow .cell-2 {
       background: #eee4da;
-      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-2 {
+          font-size: 35px; } }
     .board .gridRow .cell-4 {
       background: #eee1c9;
-      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+      box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-4 {
+          font-size: 35px; } }
     .board .gridRow .cell-8 {
       color: #f9f6f2;
-      background: #f3b27a; }
+      background: #f3b27a;
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-8 {
+          font-size: 35px; } }
     .board .gridRow .cell-16 {
       color: #f9f6f2;
-      background: #f69664; }
+      background: #f69664;
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-16 {
+          font-size: 35px; } }
     .board .gridRow .cell-32 {
       color: #f9f6f2;
-      background: #f77c5f; }
+      background: #f77c5f;
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-32 {
+          font-size: 35px; } }
     .board .gridRow .cell-64 {
       color: #f9f6f2;
-      background: #f75f3b; }
+      background: #f75f3b;
+      font-size: 55px; }
+      @media screen and (max-width: 520px) {
+        .board .gridRow .cell-64 {
+          font-size: 35px; } }
     .board .gridRow .cell-128 {
       color: #f9f6f2;
       background: #edd073;
