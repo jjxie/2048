@@ -35,3 +35,8 @@ Builds the app for production to the `dist` folder.<br>
 
 Launches the test runner in the interactive watch mode.<br>
 
+
+### `npm run scss`
+
+Output css file.<br>
+
