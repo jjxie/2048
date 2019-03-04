@@ -2,7 +2,11 @@ import {
   getZeroTileArray,
   checkSameValueInRow,
   checkIfWin,
-  checkIfCouldMove
+  checkIfCouldMove,
+  checkIfCouldMoveLeft,
+  checkIfCouldMoveRight,
+  checkIfCouldMoveUp,
+  checkIfCouldMoveDown
 } from "./gameState.js";
 
 let zeroArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -12,6 +16,19 @@ let testGameOver = [[4, 8, 4], [2, 4, 16], [32, 2, 4]];
 let testGameNotOver = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
 let test2048 = [[4, 2048, 4], [2, 4, 4], [8, 2, 8]];
 let testNo2048 = [[4, 8, 4], [2, 4, 4], [8, 2, 8]];
+let couldMoveLeft = [[0, 0, 0, 0], [4, 0, 0, 0], [8, 2, 0, 0], [16, 4, 0, 2]];
+let couldNotMoveLeft = [[2, 0, 0, 0], [2, 0, 0, 0], [2, 0, 0, 0], [2, 0, 0, 0]];
+let couldMoveRight = [[0, 2, 0, 0], [0, 0, 4, 2], [0, 0, 0, 2], [0, 0, 0, 0]];
+let couldNotMoveRight = [
+  [0, 0, 0, 0],
+  [0, 0, 4, 2],
+  [0, 0, 0, 0],
+  [0, 0, 0, 0]
+];
+let couldMoveUp = [[0, 0, 0, 0], [0, 0, 0, 0], [2, 0, 0, 0], [2, 0, 0, 4]];
+let couldNotMoveUp = [[2, 0, 4, 4], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+let couldMoveDown = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 4], [2, 2, 0, 4]];
+let couldNotMoveDown = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [2, 0, 4, 4]];
 
 test("should output all index of zero item in an array", () => {
   const text = getZeroTileArray(zeroArray);
@@ -65,5 +82,45 @@ test("should could move when game is win but keep playing", () => {
 
 test("should could not move when in game is win message page", () => {
   const couldMove = checkIfCouldMove(false, true, true);
+  expect(couldMove).toEqual(false);
+});
+
+test("should could move left", () => {
+  const couldMove = checkIfCouldMoveLeft(couldMoveLeft);
+  expect(couldMove).toEqual(true);
+});
+
+test("should couldn't move left", () => {
+  const couldMove = checkIfCouldMoveLeft(couldNotMoveLeft);
+  expect(couldMove).toEqual(false);
+});
+
+test("should could move right", () => {
+  const couldMove = checkIfCouldMoveRight(couldMoveRight);
+  expect(couldMove).toEqual(true);
+});
+
+test("should couldn't move right", () => {
+  const couldMove = checkIfCouldMoveRight(couldNotMoveRight);
+  expect(couldMove).toEqual(false);
+});
+
+test("should could move up", () => {
+  const couldMove = checkIfCouldMoveUp(couldMoveUp);
+  expect(couldMove).toEqual(true);
+});
+
+test("should couldn't move up", () => {
+  const couldMove = checkIfCouldMoveUp(couldNotMoveUp);
+  expect(couldMove).toEqual(false);
+});
+
+test("should could move down", () => {
+  const couldMove = checkIfCouldMoveDown(couldMoveDown);
+  expect(couldMove).toEqual(true);
+});
+
+test("should couldn't move down", () => {
+  const couldMove = checkIfCouldMoveDown(couldNotMoveDown);
   expect(couldMove).toEqual(false);
 });

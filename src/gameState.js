@@ -116,3 +116,43 @@ export const checkIfCouldMove = (gameOver, gameWin, showGameWin) => {
   }
   return couldMove;
 };
+
+export const checkIfCouldMoveLeft = tiles => {
+  let size = tiles[0].length;
+  let couldMove = false;
+  for (let i = 0; i < size; i++) {
+    for (let j = size - 1; j > 0; j--) {
+      if (tiles[i][j] !== 0) {
+        if (tiles[i][j] === tiles[i][j - 1] || tiles[i][j - 1] === 0) {
+          couldMove = true;
+        }
+      }
+    }
+  }
+  return couldMove;
+};
+
+export const checkIfCouldMoveRight = tiles => {
+  let size = tiles[0].length;
+  let couldMove = false;
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size - 1; j++) {
+      if (tiles[i][j] !== 0) {
+        if (tiles[i][j] === tiles[i][j + 1] || tiles[i][j + 1] === 0) {
+          couldMove = true;
+        }
+      }
+    }
+  }
+  return couldMove;
+};
+
+export const checkIfCouldMoveUp = tiles => {
+  tiles = transformArray(tiles);
+  return checkIfCouldMoveLeft(tiles);
+};
+
+export const checkIfCouldMoveDown = tiles => {
+  tiles = transformArray(tiles);
+  return checkIfCouldMoveRight(tiles);
+};

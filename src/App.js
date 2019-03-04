@@ -9,7 +9,11 @@ import {
   checkGameOver,
   getZeroTileArray,
   checkIfWin,
-  checkIfCouldMove
+  checkIfCouldMove,
+  checkIfCouldMoveLeft,
+  checkIfCouldMoveRight,
+  checkIfCouldMoveUp,
+  checkIfCouldMoveDown
 } from "./gameState.js";
 import { moveRight, moveLeft, moveUp, moveDown } from "./move.js";
 import ArrowKeysReact from "arrow-keys-react";
@@ -163,39 +167,55 @@ class App extends Component {
     ) {
       ArrowKeysReact.config({
         left: async () => {
-          let result = await moveLeft(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveLeft(this.state.tiles)) {
+            let result = await moveLeft(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         right: async () => {
-          let result = await moveRight(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveRight(this.state.tiles)) {
+            let result = await moveRight(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         up: async () => {
-          let result = await moveUp(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveUp(this.state.tiles)) {
+            let result = await moveUp(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         down: async () => {
-          let result = await moveDown(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveDown(this.state.tiles)) {
+            let result = await moveDown(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         }
       });
       // Swipe config
       swipeConfig = {
         onSwipedLeft: async () => {
-          let result = await moveLeft(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveLeft(this.state.tiles)) {
+            let result = await moveLeft(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         onSwipedRight: async () => {
-          let result = await moveRight(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveRight(this.state.tiles)) {
+            let result = await moveRight(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         onSwipedUp: async () => {
-          let result = await moveUp(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveUp(this.state.tiles)) {
+            let result = await moveUp(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         onSwipedDown: async () => {
-          let result = await moveDown(this.state.tiles, this.state.score);
-          this.handleMove(result);
+          if (checkIfCouldMoveDown(this.state.tiles)) {
+            let result = await moveDown(this.state.tiles, this.state.score);
+            this.handleMove(result);
+          }
         },
         trackMouse: true
       };
