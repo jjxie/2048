@@ -35,6 +35,7 @@ class App extends Component {
     super(props);
     this.state = {
       tiles: Array.from(Array(gridX), () => Array(gridY).fill(0)),
+      // tiles: tilesGameWin,
       zeroTileArray: [],
       gameOver: false,
       gameWin: false,
@@ -47,13 +48,37 @@ class App extends Component {
     };
   }
 
+  componentWillMount() {
+    localStorage.getItem("tiles") &&
+      this.setState({
+        tiles: JSON.parse(localStorage.getItem("tiles")),
+        score: JSON.parse(localStorage.getItem("score")),
+        scoreArray: JSON.parse(localStorage.getItem("scoreArray")),
+        zeroTileArray: JSON.parse(localStorage.getItem("zeroArray")),
+        gameOver: JSON.parse(localStorage.getItem("gameOver")),
+        gameWin: JSON.parse(localStorage.getItem("gameWin")),
+        showGameWin: JSON.parse(localStorage.getItem("showGameWin"))
+      });
+  }
+
   componentDidMount() {
-    let result = initialGame(gridX, gridY);
-    this.setState({
-      tiles: result.tiles,
-      // tiles: tilesGameWin,
-      zeroTileArray: result.zeroArray
-    });
+    if (!localStorage.getItem("tiles")) {
+      let result = initialGame(gridX, gridY);
+      this.setState({
+        tiles: result.tiles,
+        zeroTileArray: result.zeroArray
+      });
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem("tiles", JSON.stringify(nextState.tiles));
+    localStorage.setItem("score", JSON.stringify(nextState.score));
+    localStorage.setItem("scoreArray", JSON.stringify(nextState.scoreArray));
+    localStorage.setItem("zeroArray", JSON.stringify(nextState.zeroTileArray));
+    localStorage.setItem("gameOver", JSON.stringify(nextState.gameOver));
+    localStorage.setItem("gameWin", JSON.stringify(nextState.gameWin));
+    localStorage.setItem("showGameWin", JSON.stringify(nextState.showGameWin));
   }
 
   checkIfGameOver = async () => {
@@ -119,7 +144,7 @@ class App extends Component {
   };
 
   render() {
-    let config;
+    let swipeConfig;
     //  Keyboard input config
     if (
       checkIfCouldMove(
@@ -147,7 +172,7 @@ class App extends Component {
         }
       });
       // Swipe config
-      config = {
+      swipeConfig = {
         onSwipedLeft: async () => {
           let result = await moveLeft(this.state.tiles, this.state.score);
           this.handleMove(result);
@@ -173,7 +198,7 @@ class App extends Component {
         up: () => {},
         down: () => {}
       });
-      config = {
+      swipeConfig = {
         onSwipedLeft: () => {},
         onSwipedRight: () => {},
         onSwipedUp: () => {},
@@ -184,10 +209,10 @@ class App extends Component {
 
     return (
       <div {...ArrowKeysReact.events} tabIndex="1">
-        <Header score={this.state.scoreArray} restart={this.handleRestart} />
+        <Header scores={this.state.scoreArray} restart={this.handleRestart} />
         <Logo />
         <Score score={this.state.score} />
-        <Swipeable {...config}>
+        <Swipeable {...swipeConfig}>
           <Board
             gridX={gridX}
             gridY={gridY}
