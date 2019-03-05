@@ -52,7 +52,7 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     localStorage.getItem("tiles") &&
       this.setState({
         tiles: JSON.parse(localStorage.getItem("tiles")),
@@ -75,7 +75,7 @@ class App extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     localStorage.setItem("tiles", JSON.stringify(nextState.tiles));
     localStorage.setItem("score", JSON.stringify(nextState.score));
     localStorage.setItem("scoreArray", JSON.stringify(nextState.scoreArray));
