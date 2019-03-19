@@ -70,26 +70,16 @@ export const newTile = async (tiles, zeroTileArray) => {
   return { tiles: tiles, row: quotient, column: remainder };
 };
 
-export const checkSameValueInRow = (tiles, gameOver) => {
-  let size = tiles[0].length;
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size - 1; j++) {
-      if (tiles[i][j] == tiles[i][j + 1]) {
-        gameOver = false;
-      }
-    }
-  }
-  return gameOver;
-};
-
 export const checkGameOver = tiles => {
   let gameOver = true;
-  // Check each row if have tiles with same value
-  gameOver = checkSameValueInRow(tiles, gameOver);
-  // Check each column if have tiles with same value
-  tiles = transformArray(tiles);
-  gameOver = checkSameValueInRow(tiles, gameOver);
-
+  if (
+    checkIfCouldMoveLeft(tiles) ||
+    checkIfCouldMoveRight(tiles) ||
+    checkIfCouldMoveUp(tiles) ||
+    checkIfCouldMoveDown(tiles)
+  ) {
+    gameOver = false;
+  }
   return gameOver;
 };
 
@@ -106,7 +96,7 @@ export const checkIfWin = tiles => {
   return gameWin;
 };
 
-export const checkIfCouldMove = (gameOver, gameWin, showGameWin) => {
+export const checkGameState = (gameOver, gameWin, showGameWin) => {
   let couldMove = true;
   if (gameOver) {
     couldMove = false;

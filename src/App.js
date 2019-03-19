@@ -9,7 +9,7 @@ import {
   checkGameOver,
   getZeroTileArray,
   checkIfWin,
-  checkIfCouldMove,
+  checkGameState,
   checkIfCouldMoveLeft,
   checkIfCouldMoveRight,
   checkIfCouldMoveUp,
@@ -23,7 +23,7 @@ const gridX = 4;
 const gridY = 4;
 const tilesGameOver = [
   [4, 8, 2, 2],
-  [2, 16, 32, 8],
+  [32, 16, 32, 8],
   [4, 2, 8, 16],
   [256, 128, 4, 2]
 ];
@@ -69,7 +69,8 @@ class App extends Component {
     if (!localStorage.getItem("tiles")) {
       let result = initialGame(gridX, gridY);
       this.setState({
-        tiles: result.tiles,
+        // tiles: result.tiles,
+        tiles: tilesGameOver,
         zeroTileArray: result.zeroArray
       });
     }
@@ -159,7 +160,7 @@ class App extends Component {
     let swipeConfig;
     //  Keyboard input config
     if (
-      checkIfCouldMove(
+      checkGameState(
         this.state.gameOver,
         this.state.gameWin,
         this.state.showGameWin

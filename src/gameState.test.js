@@ -1,12 +1,12 @@
 import {
   getZeroTileArray,
-  checkSameValueInRow,
   checkIfWin,
-  checkIfCouldMove,
+  checkGameState,
   checkIfCouldMoveLeft,
   checkIfCouldMoveRight,
   checkIfCouldMoveUp,
-  checkIfCouldMoveDown
+  checkIfCouldMoveDown,
+  checkGameOver
 } from "./gameState.js";
 
 let zeroArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -45,16 +45,6 @@ test("should output empty array", () => {
   expect(text).toEqual([]);
 });
 
-test("should return game over to true when has no same Value", () => {
-  const gameOver = checkSameValueInRow(testGameOver, true);
-  expect(gameOver).toEqual(true);
-});
-
-test("should return game over to false when has same Value", () => {
-  const gameOver = checkSameValueInRow(testGameNotOver, true);
-  expect(gameOver).toEqual(false);
-});
-
 test("should return true when contains 2048 in the tiles", () => {
   const win = checkIfWin(test2048);
   expect(win).toEqual(true);
@@ -66,22 +56,22 @@ test("should return true when contains no 2048 in the tiles", () => {
 });
 
 test("should could move when game is not over", () => {
-  const couldMove = checkIfCouldMove(false, false, false);
+  const couldMove = checkGameState(false, false, false);
   expect(couldMove).toEqual(true);
 });
 
 test("should could not move when game is over", () => {
-  const couldMove = checkIfCouldMove(true, false, false);
+  const couldMove = checkGameState(true, false, false);
   expect(couldMove).toEqual(false);
 });
 
 test("should could move when game is win but keep playing", () => {
-  const couldMove = checkIfCouldMove(false, true, false);
+  const couldMove = checkGameState(false, true, false);
   expect(couldMove).toEqual(true);
 });
 
 test("should could not move when in game is win message page", () => {
-  const couldMove = checkIfCouldMove(false, true, true);
+  const couldMove = checkGameState(false, true, true);
   expect(couldMove).toEqual(false);
 });
 
@@ -123,4 +113,14 @@ test("should could move down", () => {
 test("should couldn't move down", () => {
   const couldMove = checkIfCouldMoveDown(couldNotMoveDown);
   expect(couldMove).toEqual(false);
+});
+
+test("should output game over true", () => {
+  const gameOver = checkGameOver(testGameOver);
+  expect(gameOver).toEqual(true);
+});
+
+test("should output game over false", () => {
+  const gameOver = checkGameOver(testGameNotOver);
+  expect(gameOver).toEqual(false);
 });
