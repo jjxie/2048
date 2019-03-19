@@ -37,8 +37,8 @@ export const getMergedPositionToRight = (row, tiles, mergedArray) => {
 };
 
 // Calculate new value for each row each cell and move tiles when have zero on the right
-export const moveRight = async (tiles, score) => {
-  tiles = await moveNonZeroNumberToRight(tiles);
+export const moveRight = (tiles, score) => {
+  tiles = moveNonZeroNumberToRight(tiles);
   let mergedArray = [];
   for (let i = 0; i < tiles[0].length; i++) {
     let mergedP = [];
@@ -51,11 +51,11 @@ export const moveRight = async (tiles, score) => {
       }
     }
     mergedArray = mergedArray.concat(
-      await getMergedPositionToRight(i, tiles[i], mergedP)
+      getMergedPositionToRight(i, tiles[i], mergedP)
     );
   }
-  tiles = await moveNonZeroNumberToRight(tiles);
-  let zeroArray = await getZeroTileArray(tiles);
+  tiles = moveNonZeroNumberToRight(tiles);
+  let zeroArray = getZeroTileArray(tiles);
   return { tiles, score, zeroArray, mergedArray };
 };
 
@@ -94,10 +94,10 @@ export const getMergedPositionToLeft = (row, tiles, mergedArray) => {
 };
 
 // Calculate new value for each row each cell and move tiles when have zero on the left
-export const moveLeft = async (tiles, score) => {
+export const moveLeft = (tiles, score) => {
   let size = tiles[0].length;
   let mergedArray = [];
-  tiles = await moveNonZeroNumberToLeft(tiles);
+  tiles = moveNonZeroNumberToLeft(tiles);
   for (let i = 0; i < size; i++) {
     let mergedP = [];
     for (let j = 1; j < size; j++) {
@@ -109,11 +109,11 @@ export const moveLeft = async (tiles, score) => {
       }
     }
     mergedArray = mergedArray.concat(
-      await getMergedPositionToLeft(i, tiles[i], mergedP)
+      getMergedPositionToLeft(i, tiles[i], mergedP)
     );
   }
-  tiles = await moveNonZeroNumberToLeft(tiles);
-  let zeroArray = await getZeroTileArray(tiles);
+  tiles = moveNonZeroNumberToLeft(tiles);
+  let zeroArray = getZeroTileArray(tiles);
   return { tiles, score, zeroArray, mergedArray };
 };
 
@@ -149,25 +149,25 @@ export const transformMergedArray = (size, mergedArray) => {
 };
 
 // Transform move up to move left operation
-export const moveUp = async (tiles, score) => {
+export const moveUp = (tiles, score) => {
   let size = tiles[0].length;
-  let tempArray = await transformArray(tiles);
-  let result = await moveLeft(tempArray, score);
+  let tempArray = transformArray(tiles);
+  let result = moveLeft(tempArray, score);
   score = result.score;
-  let mergedArray = await transformMergedArray(size, result.mergedArray);
-  let transformBackArray = await transformArrayBack(tiles, result.tiles);
-  let zeroArray = await getZeroTileArray(transformBackArray);
-  return { tiles: transformBackArray, score, zeroArray, mergedArray };
+  let mergedArray = transformMergedArray(size, result.mergedArray);
+  let transformTilesBack = transformArrayBack(tiles, result.tiles);
+  let zeroArray = getZeroTileArray(transformTilesBack);
+  return { tiles: transformTilesBack, score, zeroArray, mergedArray };
 };
 
 // Transform move down operation to move right operation
-export const moveDown = async (tiles, score) => {
+export const moveDown = (tiles, score) => {
   let size = tiles[0].length;
-  let tempArray = await transformArray(tiles);
-  let result = await moveRight(tempArray, score);
+  let tempArray = transformArray(tiles);
+  let result = moveRight(tempArray, score);
   score = result.score;
-  let mergedArray = await transformMergedArray(size, result.mergedArray);
-  let transformTilesBack = await transformArrayBack(tiles, result.tiles);
-  let zeroArray = await getZeroTileArray(transformTilesBack);
+  let mergedArray = transformMergedArray(size, result.mergedArray);
+  let transformTilesBack = transformArrayBack(tiles, result.tiles);
+  let zeroArray = getZeroTileArray(transformTilesBack);
   return { tiles: transformTilesBack, score, zeroArray, mergedArray };
 };

@@ -61,7 +61,7 @@ export const getZeroTileArray = tiles => {
 };
 
 // Create a new tile
-export const newTile = async (tiles, zeroTileArray) => {
+export const newTile = (tiles, zeroTileArray) => {
   let size = tiles[0].length;
   let newPosition = zeroTileArray[getRandomInt(zeroTileArray.length)];
   let quotient = Math.floor(newPosition / size);
