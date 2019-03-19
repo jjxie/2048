@@ -69,8 +69,7 @@ class App extends Component {
     if (!localStorage.getItem("tiles")) {
       let result = initialGame(gridX, gridY);
       this.setState({
-        // tiles: result.tiles,
-        tiles: tilesGameOver,
+        tiles: result.tiles,
         zeroTileArray: result.zeroArray
       });
     }
