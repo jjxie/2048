@@ -63,10 +63,10 @@ export const getZeroTileArray = tiles => {
 // Create a new tile
 export const newTile = async (tiles, zeroTileArray) => {
   let size = tiles[0].length;
-  let newPosition = await zeroTileArray[getRandomInt(zeroTileArray.length)];
-  let quotient = await Math.floor(newPosition / size);
-  let remainder = (await newPosition) % size;
-  tiles[quotient][remainder] = (await Math.random()) < 0.9 ? 2 : 4;
+  let newPosition = zeroTileArray[getRandomInt(zeroTileArray.length)];
+  let quotient = Math.floor(newPosition / size);
+  let remainder = newPosition % size;
+  tiles[quotient][remainder] = Math.random() < 0.9 ? 2 : 4;
   return { tiles: tiles, row: quotient, column: remainder };
 };
 
