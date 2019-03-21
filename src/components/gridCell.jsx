@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { cellClassName } from "../cellStyle.js";
 
 export default class GridCell extends Component {
-  setClassName = (cellValue, newTile, mergedTiles) => {
+  constructor(props) {
+    super(props);
+    this.setClassName = this.setClassName.bind(this);
+  }
+
+  setClassName(cellValue, newTile, mergedTiles) {
     let valueClass = cellClassName(cellValue);
     let className = "gridCell ".concat(valueClass);
     if (newTile) {
@@ -12,7 +17,7 @@ export default class GridCell extends Component {
       className = className.concat(" cell-merged");
     }
     return className;
-  };
+  }
 
   render() {
     const { tile, newTile, mergedTiles } = this.props;

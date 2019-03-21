@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import GridCell from "./gridCell.jsx";
+import GridCell from "./GridCell.jsx";
 const uuidv4 = require("uuid/v4");
 
 export default class GridRow extends Component {
-  creatGridCell = (size, tileRow, newtileColumn, mergedTiles) => {
+  constructor(props) {
+    super(props);
+    this.creatGridCell = this.creatGridCell.bind(this);
+  }
+
+  creatGridCell(size, tileRow, newtileColumn, mergedTiles) {
     let eachCell = [];
     for (let i = 0; i < size; i++) {
       eachCell.push(
@@ -16,7 +21,7 @@ export default class GridRow extends Component {
       );
     }
     return eachCell;
-  };
+  }
 
   render() {
     const { size, tileRow, newtileColumn, mergedTiles } = this.props;

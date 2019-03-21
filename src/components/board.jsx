@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import GridRow from "./gridRow.jsx";
+import GridRow from "./GridRow.jsx";
 const uuidv4 = require("uuid/v4");
 
 export default class Board extends Component {
-  creatGridRow = (
-    gridX,
-    gridY,
-    tiles,
-    newtileRow,
-    newtileColumn,
-    mergedTiles
-  ) => {
+  constructor(props) {
+    super(props);
+    this.creatGridRow = this.creatGridRow.bind(this);
+    this.boardClassName = this.boardClassName.bind(this);
+  }
+
+  creatGridRow(gridX, gridY, tiles, newtileRow, newtileColumn, mergedTiles) {
     let eachRow = [];
     let merged = Array.from(Array(gridX), () => Array(gridY).fill(0));
     if (mergedTiles !== undefined || mergedTiles.length !== 0) {
@@ -32,9 +31,9 @@ export default class Board extends Component {
       );
     }
     return eachRow;
-  };
+  }
 
-  boardClassName = (gameOver, gameWin, showGameWin) => {
+  boardClassName(gameOver, gameWin, showGameWin) {
     let className = "board";
     if (gameOver) {
       className = className.concat(" gameOver");
@@ -43,7 +42,7 @@ export default class Board extends Component {
       className = className.concat(" gameWin");
     }
     return className;
-  };
+  }
 
   render() {
     const {

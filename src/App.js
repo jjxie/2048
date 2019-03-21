@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Header from "./components/header.jsx";
-import Logo from "./components/logo.jsx";
-import Score from "./components/score.jsx";
-import Board from "./components/board.jsx";
+import Header from "./components/Header.jsx";
+import Title from "./components/Title.jsx";
+import Score from "./components/Score.jsx";
+import Board from "./components/Board.jsx";
 import {
   initialGame,
   newTile,
@@ -43,6 +43,8 @@ class App extends Component {
       newtileColumn: -1,
       mergedTiles: []
     };
+    this.handleRestart = this.handleRestart.bind(this);
+    this.handleWin = this.handleWin.bind(this);
   }
 
   UNSAFE_componentWillMount() {
@@ -79,7 +81,7 @@ class App extends Component {
     localStorage.setItem("showGameWin", JSON.stringify(nextState.showGameWin));
   }
 
-  checkIfGameOver = async () => {
+  checkIfGameOver = () => {
     let gameOver = checkGameOver(this.state.tiles);
     if (gameOver) {
       this.setState({
@@ -130,7 +132,7 @@ class App extends Component {
     await this.checkIfGameWin();
   };
 
-  handleRestart = () => {
+  handleRestart() {
     let result = initialGame(gridX, gridY);
     this.setState({
       tiles: result.tiles,
@@ -143,11 +145,11 @@ class App extends Component {
       newtileColumn: result.newtileColumn,
       mergedTiles: result.mergedTiles
     });
-  };
+  }
 
-  handleWin = () => {
+  handleWin() {
     this.setState({ showGameWin: false });
-  };
+  }
 
   render() {
     let swipeConfig;
@@ -232,7 +234,7 @@ class App extends Component {
     return (
       <div {...ArrowKeysReact.events} tabIndex="1">
         <Header scores={this.state.scoreArray} restart={this.handleRestart} />
-        <Logo />
+        <Title />
         <Score score={this.state.score} />
         <Swipeable {...swipeConfig}>
           <Board

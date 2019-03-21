@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 
 export default class Header extends Component {
-  getBestScore = scores => {
+  constructor(props) {
+    super(props);
+    this.getBestScore = this.getBestScore.bind(this);
+  }
+
+  getBestScore(scores) {
     if (scores !== undefined) {
       let arr = Object.values(scores);
       let max = Math.max(...arr);
       return max;
     }
     return 0;
-  };
+  }
   render() {
     const { scores, restart } = this.props;
     return (

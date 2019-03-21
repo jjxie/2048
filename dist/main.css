@@ -48,11 +48,11 @@ body {
     padding: 5px;
     margin-left: 22px; }
 
-.logo {
+.title {
   margin-top: -28px;
   text-align: center;
   color: #776e66; }
-  .logo .p {
+  .title .p {
     font-size: 16px; }
 
 .score {
